@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+ <mapper namespace="com.study.springboot.dao.AccountDao">
+ <insert id="insert" >
+      insert into popole_blog(id,category,account,contentdate,content,no,title)
+           values (#{id},#{category},#{account},#{contentdate},#{content},popole_blog_seq.nextval,#{title})
+   </insert>
+	
+	<select id="count" resultType="_int"> 
+		select count(*) from popole_blog where id = #{id} and category ='account'
+	</select>
+	
+ <select id="getUserNo" resultType="com.study.springboot.dto.AccountDto"> 
+		select * from popole_blog where no =#{no}
+	</select>
+	
+ <select id="getUserId" resultType="com.study.springboot.dto.AccountDto"> 
+		select * from popole_blog where id =#{id} and category ='account' order by contentdate desc
+	</select>
+	
+		<update id="updateAccount" parameterType="com.study.springboot.dto.AccountDto" >
+        update popole_blog set contentdate=#{contentdate},account =#{account},content = #{content} where no=#{no}
+   	</update>
+   	
+   	<delete id="delete">
+		delete from popole_blog where no = #{no}
+	</delete>
+	
+<select id="accountlist" resultType="com.study.springboot.dto.AccountDto"> 
+	select *from(select rownum rnum, id,account,content,contentdate,category,reg,no,title from popole_blog where
+				 category='account' and id=#{id} order by contentdate desc)
+					where rnum between #{pagenum}and #{pagelast}
+
+	</select>
+	
+ </mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   <mapper namespace="com.study.springboot.dao.BannerDao">
+ 
+ 	 <update id="updateBanner" parameterType="com.study.springboot.dto.BannerDto" >
+        update popole_banner set file1=#{file1} ,file2=#{file2},file3=#{file3},file4=#{file4},filead=#{filead}, 
+        file1_link=#{file1_link},file2_link=#{file2_link},file3_link=#{file3_link},file4_link=#{file4_link},filead_link=#{filead_link} where id ='manager'
+   	</update>
+  
+  <select id="getBanner" resultType="com.study.springboot.dto.BannerDto"> 
+		select * from popole_banner where id =#{id}
+	</select>
+  
+   </mapper>

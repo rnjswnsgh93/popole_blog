@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+ <mapper namespace="com.study.springboot.dao.ManagerDao">
+ 
+ <select id="mypagelist" resultType="com.study.springboot.dto.ManagerDto"> 
+ select *from(select rownum rnum, id,content,filename,reg,category,hit,no,title from popole_blog where id =#{id} order by reg desc)
+					where rnum between #{pagenum} and #{pagelast}
+	</select>	
+	
+	<select id="mypagelist_count" resultType="_int"> 
+		select count(*) from popole_blog where id=#{id}
+	</select>
+	
+<select id="asidelist" resultType="com.study.springboot.dto.ManagerDto"> 
+		select * from popole_blog where category ='daily' or category ='taste' order by reg desc
+	</select>
+	
+	<select id="idCheck" resultType="_int"> 
+		select count(*) from popole_blog where id = #{id}
+	</select>
+	
+	<select id="memberwritelist" resultType="com.study.springboot.dto.ManagerDto"> 
+		select *from(select rownum rnum, id,content,filename,reg,category,hit,no,title from popole_blog order by reg desc)
+					where rnum between #{pagenum} and #{pagelast}
+	</select>
+	
+		<delete id="delete">
+		delete from popole_blog where no = #{no}
+	</delete>
+	
+	<select id="searchlist" resultType="com.study.springboot.dto.ManagerDto"> 
+	select *from(select rownum rnum, id,content,filename,reg,category,hit,no,title from popole_blog where
+				(category='daily'or category='taste') and content like  '%'||#{search}||'%' order by reg desc)
+					where rnum between #{pagenum} and #{pagelast}
+	</select>
+	
+	<select id="search_count" resultType="_int"> 
+		select count(*) from popole_blog where (category ='daily' or category='taste') and content like  '%'||#{search_count}||'%'
+	</select>
+	
+	<select id="manager_writelist_count" resultType="_int"> 
+		select count(*) from popole_blog
+	</select>
+	
+ </mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.study.springboot.dao.IMemberDao">
+
+<insert id="insert" >
+      insert into popole_member(id,password,name,birth,mail)
+           values (#{id},#{password},#{name},#{birth},#{mail})
+   </insert>
+   
+  <select id="idCheck" resultType="_int"> 
+		select count(*) from popole_member where id = #{id}
+	</select>
+	
+ <select id="loginCheck" resultType="com.study.springboot.dto.MemberDto"> 
+		select password from popole_member where id=#{id}
+	</select>
+	
+	<select id="getUser" resultType="com.study.springboot.dto.MemberDto"> 
+		select * from popole_member where id=#{id}
+	</select>
+
+	
+	<update id="updateMember">
+		update popole_member set password = #{password}, mail = #{mail}, 
+		     name =#{name}  WHERE id = #{id}
+	</update>
+		
+   	<delete id="deleteMember">
+		delete from popole_member where id = #{id}
+	</delete>
+	<select id="count_member" resultType="_int"> 
+		select count(*) from popole_member
+	</select>
+	
+	<select id="list" resultType="com.study.springboot.dto.MemberDto"> 
+	select *from(select RANK() OVER(ORDER BY reg desc) rnum, id,password,name,birth,mail,reg from popole_member 
+					)where rnum between #{pagenum}and #{pagelast}
+
+
+	</select>
+	
+  </mapper>

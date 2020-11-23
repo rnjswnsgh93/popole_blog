@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+ <mapper namespace="com.study.springboot.dao.ReplyDao">
+	<insert id="insert" >
+      insert into popole_reply(id,"content",step,"viewno","group","no")
+           values (#{id},#{content},#{step},#{viewno},popole_reply_seq.nextval,popole_reply_seq.currval)
+   </insert>
+   
+   
+   <insert id="insert_reply" >
+      insert into popole_reply(id,"content",step,"viewno","group","no")
+           values (#{id},#{content},#{step},#{viewno},#{group},popole_reply_seq.nextval)
+   </insert>
+   
+	<select id="reply_list" resultType="com.study.springboot.dto.ReplyDto"> 
+		select * from popole_reply where "viewno" = #{viewno} order by "group" desc,step asc
+	</select>
+	
+	<select id="count_reply" resultType="_int"> 
+		select count(*) from popole_reply where "viewno" =#{no}
+	</select>
+	
+	<select id="getNo" resultType="com.study.springboot.dto.ReplyDto"> 
+		select * from popole_reply where "no" = #{no}
+	</select>
+	
+	<delete id="delete">
+		delete from popole_reply where "no" = #{no}
+	</delete>
+
+ </mapper>

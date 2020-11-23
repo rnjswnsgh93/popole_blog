@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+ <mapper namespace="com.study.springboot.dao.TasteDao">
+ <insert id="insert" >
+      insert into popole_blog(id,category,title,content,no,filename)
+           values (#{id},#{category},#{title},#{content},popole_blog_seq.nextval,#{filename})
+   </insert>
+
+	 <select id="list" resultType="com.study.springboot.dto.TasteDto"> 
+	select *from(select RANK() OVER(ORDER BY reg desc) rnum, id,content,filename,reg,category,hit,no,title from popole_blog where
+				 category='taste')
+					where rnum between #{pagenum}and #{pagelast}
+	</select>
+	
+	<select id="hitlist" resultType="com.study.springboot.dto.TasteDto"> 
+		select * from popole_blog where category = 'taste' order by hit desc
+	</select>
+	<select id="count" resultType="_int"> 
+		select count(*) from popole_blog where id = #{id} and category ='taste'
+	</select>
+	
+ <select id="getUserId" resultType="com.study.springboot.dto.TasteDto"> 
+		select * from popole_blog where no =#{no}
+	</select>
+	<update id="hit" parameterType="com.study.springboot.dto.TasteDto" >
+        update popole_blog set hit = hit + 1 where no = #{no}
+   	</update>
+   	
+   	<update id="updateTaste" parameterType="com.study.springboot.dto.TasteDto" >
+        update popole_blog set title=#{title},content =#{content},filename = #{filename} where no=#{no}
+   	</update>
+   	
+   	<delete id="delete">
+		delete from popole_blog where no = #{no}
+	</delete>
+	
+	<select id="taste_count" resultType="_int"> 
+		select count(*) from popole_blog where category ='taste'
+	</select>
+ 
+ 
+    </mapper>

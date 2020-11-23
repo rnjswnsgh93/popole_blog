@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+ <mapper namespace="com.study.springboot.dao.VisitDao">
+ <insert id="insert" >
+      insert into popole_visit(id,password,"category","content","group",step,"no")
+           values (#{id},#{password},#{category},#{content},popole_visit_seq.currval,0,popole_visit_seq.nextval)
+   </insert>
+   
+   <insert id="insert_reply" >
+      insert into popole_visit(id,password,"category","content","group",step,"no")
+           values (#{id},#{password},#{category},#{content},#{group},1,popole_visit_seq.nextval)
+   </insert>
+ 
+ 	<select id="list" resultType="com.study.springboot.dto.VisitDto"> 
+		select * from popole_visit  order by "group" desc,step asc
+	</select>
+	
+	<select id="getUserNo" resultType="com.study.springboot.dto.VisitDto"> 
+		select * from popole_visit where "no" = #{no}
+	</select>
+	
+	<delete id="delete">
+		delete from popole_visit where "no" = #{no}
+	</delete>
+	<delete id="delete_group">
+		delete from popole_visit where "group" = #{group}
+	</delete>
+ </mapper>
